@@ -1,0 +1,33 @@
+{
+  "name": "unb-libraries/dockworker-jekyll",
+  "description": "Services for wiring up jekyll containers for development",
+  "type": "library",
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "unb-libraries/dockworker": "~4"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "UNB Libraries",
+      "email": "libsupport@unb.ca"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Dockworker\\": "src"
+    }
+  },
+  "scripts": {
+    "post-update-cmd": [
+      "vendor/bin/dockworker git:setup-hooks",
+      "vendor/bin/dockworker local:jekyll:update-builder"
+    ]
+  }
+}
