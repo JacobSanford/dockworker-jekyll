@@ -81,5 +81,28 @@ class JekyllLocalCommands extends DockworkerLocalCommands {
       ->run();
   }
 
+  /**
+   * Display local application container logs and monitor for new ones.
+   *
+   * @param string[] $opts
+   *   An array of options to pass to the builder.
+   *
+   * @option bool $timestamps
+   *   Display a timestamp for each line of the logs.
+   *
+   * @command local:logs:tail
+   * @aliases logs
+   * @throws \Exception
+   *
+   * @usage local:logs:tail
+   *
+   * @return \Robo\Result
+   *   The result of the command.
+   */
+  public function tailLocalLogs(array $opts = ['timestamps' => FALSE]) {
+    $opts['all'] = TRUE;
+    return parent::tailLocalLogs($opts);
+  }
+
 }
 
