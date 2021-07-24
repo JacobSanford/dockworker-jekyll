@@ -27,11 +27,12 @@ class JekyllLocalCommands extends DockworkerLocalCommands {
     $this->say("Setting Up Latest Builder...");
     $this->curUserGid = posix_getgid();
     $this->jekyllBuilderPath = $this->repoRoot . "/builder";
-    $this->jekyllBuilderSource = $this->repoRoot . "/vendor/unb-libraries/dockworker-jekyll/data/builder/Dockerfile";
+    $this->jekyllBuilderSource = $this->repoRoot . "/vendor/unb-libraries/dockworker-jekyll/data/builder";
     $this->taskExec('mkdir -p')
-      ->arg($this->jekyllBuilderPath)
+      ->arg("$this->jekyllBuilderPath/build/scripts")
       ->run();
-    $this->_copy($this->jekyllBuilderSource, "$this->jekyllBuilderPath/Dockerfile");
+    $this->_copy("$this->jekyllBuilderSource/Dockerfile", "$this->jekyllBuilderPath/Dockerfile");
+    $this->_copy("$this->jekyllBuilderSource/build/scripts/run.sh", "$this->jekyllBuilderPath/build/scripts/run.sh");
   }
 
   /**
