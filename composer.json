@@ -10,7 +10,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "unb-libraries/dockworker": "~4"
+    "unb-libraries/dockworker": "^5"
   },
   "license": "MIT",
   "authors": [
