@@ -2,12 +2,12 @@
 
 namespace Dockworker\Robo\Plugin\Commands;
 
-use Dockworker\Robo\Plugin\Commands\DockworkerLocalCommands;
+use Dockworker\DockworkerDaemonCommands;
 
 /**
  * Defines the commands used to interact with a local Jekyll application.
  */
-class JekyllLocalCommands extends DockworkerLocalCommands {
+class JekyllLocalCommands extends DockworkerDaemonCommands {
 
   const JEKYLL_CONTAINER_USER_ID = '1000';
   const JEKYLL_BUILDER_STARTING_MESSAGE = 'The local development HTML builder is likely still starting. Please refresh this page in a moment...';
@@ -26,8 +26,8 @@ class JekyllLocalCommands extends DockworkerLocalCommands {
   public function setUpLocalBuilder() {
     $this->say("Setting Up Latest Builder...");
     $this->curUserGid = posix_getgid();
-    $this->jekyllBuilderPath = $this->repoRoot . "/builder";
-    $this->jekyllBuilderSource = $this->repoRoot . "/vendor/unb-libraries/dockworker-jekyll/data/builder";
+    $this->jekyllBuilderPath = $this->applicationRoot . "/builder";
+    $this->jekyllBuilderSource = $this->applicationRoot . "/vendor/unb-libraries/dockworker-jekyll/data/builder";
     $this->taskExec('mkdir -p')
       ->arg("$this->jekyllBuilderPath/build/scripts")
       ->run();
@@ -38,12 +38,12 @@ class JekyllLocalCommands extends DockworkerLocalCommands {
   /**
    * Ensures there is a local HTML volume directory and it is as expected.
    *
-   * @hook pre-command local:start
+   * @hook pre-command application:deploy
    */
   public function setUpLocalHtmlVolumeDirectory() {
     $this->say("Setting Jekyll Volume Permissions...");
     $this->curUserGid = posix_getgid();
-    $this->jekyllVolumePath = $this->repoRoot . "/.html";
+    $this->jekyllVolumePath = $this->applicationRoot . "/.html";
     $this->jekyllIndexFile = "$this->jekyllVolumePath/index.html";
 
     $this->setJekyllVolumePermissions();
@@ -82,28 +82,4 @@ class JekyllLocalCommands extends DockworkerLocalCommands {
       ->run();
   }
 
-  /**
-   * Display local application container logs and monitor for new ones.
-   *
-   * @param string[] $opts
-   *   An array of options to pass to the builder.
-   *
-   * @option bool $timestamps
-   *   Display a timestamp for each line of the logs.
-   *
-   * @command local:logs:tail
-   * @aliases logs
-   * @throws \Exception
-   *
-   * @usage local:logs:tail
-   *
-   * @return \Robo\Result
-   *   The result of the command.
-   */
-  public function tailLocalLogs(array $opts = ['timestamps' => FALSE]) {
-    $opts['all'] = TRUE;
-    return parent::tailLocalLogs($opts);
-  }
-
 }
-

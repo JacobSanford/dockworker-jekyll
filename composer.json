@@ -5,12 +5,15 @@
   "config": {
     "preferred-install": {
       "*": "dist"
+    },
+    "allow-plugins": {
+      "php-http/discovery": true
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "unb-libraries/dockworker": "^5"
+    "unb-libraries/dockworker-daemon": "^6"
   },
   "license": "MIT",
   "authors": [
