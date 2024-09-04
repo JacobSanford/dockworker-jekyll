@@ -41,6 +41,7 @@ class JekyllLocalCommands extends DockworkerDaemonCommands {
    * @hook pre-command application:deploy
    */
   public function setUpLocalHtmlVolumeDirectory() {
+    $this->initOptions();
     $this->say("Setting Jekyll Volume Permissions...");
     $this->curUserGid = posix_getgid();
     $this->jekyllVolumePath = $this->applicationRoot . "/.html";
